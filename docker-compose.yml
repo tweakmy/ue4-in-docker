@@ -1,0 +1,60 @@
+ue4gtk3:
+  image: ue4:4.8.2-gtk3
+  devices:
+    - "/dev/nvidiactl"
+    - "/dev/snd/timer"
+    - "/dev/snd/seq"
+    - "/dev/snd/hwC0D0"
+    - "/dev/snd/controlC0"
+    - "/dev/snd/hwC1D3"
+    - "/dev/snd/hwC0D1"
+    - "/dev/snd/hwC1D2"
+    - "/dev/snd/hwC1D1"
+    - "/dev/snd/hwC1D0"
+    - "/dev/snd/controlC1"
+    - "/dev/snd/pcmC1D7p"
+    - "/dev/snd/pcmC1D8p"
+    - "/dev/snd/pcmC1D9p"
+    - "/dev/snd/pcmC1D3p"
+    - "/dev/snd/pcmC0D0p"
+    - "/dev/snd/pcmC0D0c"
+  environment:
+    DISPLAY: ":0.0"
+  net: "host"
+  volumes:
+    - /tmp/.X11-unix:/tmp/.X11-unix:ro
+    # - /proc:/proc:rw
+  privileged: true
+  command: /bin/bash
+  cpu_shares: 812
+  # dockerfile:  Dockerfile-alternate
+ue4codelite:
+  image: ue4:4.8.2-codelite
+  devices:
+    - "/dev/nvidiactl"
+    - "/dev/snd/timer"
+    - "/dev/snd/seq"
+    - "/dev/snd/hwC0D0"
+    - "/dev/snd/controlC0"
+    - "/dev/snd/hwC1D3"
+    - "/dev/snd/hwC0D1"
+    - "/dev/snd/hwC1D2"
+    - "/dev/snd/hwC1D1"
+    - "/dev/snd/hwC1D0"
+    - "/dev/snd/controlC1"
+    - "/dev/snd/pcmC1D7p"
+    - "/dev/snd/pcmC1D8p"
+    - "/dev/snd/pcmC1D9p"
+    - "/dev/snd/pcmC1D3p"
+    - "/dev/snd/pcmC0D0p"
+    - "/dev/snd/pcmC0D0c"
+  environment:
+    DISPLAY: ":0.0"
+  net: "host"
+  volumes:
+    - /tmp/.X11-unix:/tmp/.X11-unix:ro
+    # - /proc:/proc:rw
+  privileged: true
+  command: /bin/bash
+  cpu_shares: 812
+  # dockerfile:  Dockerfile-alternate
