@@ -2,7 +2,9 @@
 
 ## Why do you have to run in Docker
 This is the recording of what you have done to get in working for you.
-I can screw around my container without comprising what I want to preserved. I use this to verify qt and gtk and found out gtk works best for me.
+I can experiment with the container(if I am unsure) without comprising what I want to preserved.
+On the contrary, you could also share the your dockerbuild to verify the dependencies is properly installed
+If I move to a new host which I am about too, because laptop sucks, then I dont have to worry about whole process of setup
 
 ##How to run in your desktop
 ### ubuntu ( I am using xubuntu 14:04) -feel free to contribute others
@@ -29,14 +31,14 @@ Now, this can be other git repo, which I will update shortly
 
 3) copy your NVIDIA driver file this folder (ue4-in-docker)
 
-4) Modify the `NVIDIA-Linux-x86_64-340.76.run` in the Dockefile and put your NVIDIA driver file in there.
+4) Modify the `RUN apt-get install -yq --no-install-recommends nvidia-340` in the Dockefile and put the correct NVIDIA driver in there.
 Dont know how best to automate this to work for everybody running in Linux
 
 
 #### Do docker build
 5) Install docker in your machine which you can look up in internet and then do a docker build. You also will need to install docker-compose otherwise the `docker run` command is super long.
 ````
-$docker build -t ue4:4.8.2-codelite .
+$docker build -t ue4:master .
 ````
 and wait a long time
 
@@ -90,8 +92,9 @@ devices:
 #### Do docker-compose
 8) Once the docker build is completed. Run docker-compse run
 ````
-$docker-compose run ue4codelite /bin/bash
+$docker-compose run ue4/bin/bash
 ````
+which will signed you in as user `unreal`
 
 9) Now, you will be in a terminal /UnrealEngine, the following will build the Unreal Engine Editor
 ````
@@ -110,6 +113,8 @@ $./Engine/Binaries/Linux/UE4Editor
 ````
 
 #In future
-Everything will be automated til the build and you will get the editor or codelite displayed instead of terminal
+Everything will be automated til the build and you will get the Unreal Editor or codelite displayed instead of terminal
 
 A shell script should be provided to do step 2 and 7
+
+use xauthority instead of using xhost +, to make it more seamless build
