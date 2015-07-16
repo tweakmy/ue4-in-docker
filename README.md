@@ -3,7 +3,9 @@
 ## Why do you have to run in Docker
 This is the recording of what you have done to get in working for you.
 I can experiment with the container(if I am unsure) without comprising what I want to preserved.
+
 On the contrary, you could also share the your dockerbuild to verify the dependencies is properly installed
+
 If I move to a new host which I am about too, because laptop sucks, then I dont have to worry about whole process of setup
 
 ##How to run in your desktop
@@ -16,23 +18,20 @@ git clone https://github.com/tweakmy/ue4-in-docker.git
 $cd ue4-in-docker
 ````
 
-2) clone the unreal engine within the folder, it will prompt for your password
+2) clone the unreal engine within the folder, it will prompt for your github password
 ````
 $git clone https://github.com/EpicGames/UnrealEngine.git
 $cd UnrealEngine
 ````
-Run Setup.sh here to save time trying to download the Unreal Editor Dependencies (this would be the content,docu,sample,tutorial) during the docker build
+3) Run Setup.sh here to save time trying to download the Unreal Editor Dependencies (this would be the content,docu,sample,tutorial) during the docker build
  ````
 $sudo apt-get install mono libmono-microsoft-build-tasks-v4.0-4.0-cil
 $./Setup.sh
 ````
+**This is very time consuming as well
 
-Now, this can be other git repo, which I will update shortly
-
-3) copy your NVIDIA driver file this folder (ue4-in-docker)
-
-4) Modify the `RUN apt-get install -yq --no-install-recommends nvidia-340` in the Dockefile and put the correct NVIDIA driver in there.
-Dont know how best to automate this to work for everybody running in Linux
+4) Modify the `RUN apt-get install -yq --no-install-recommends nvidia-340` in the Dockefile and put the correct NVIDIA driver version in there.
+**Dont know how best to automate this to work for everybody running in Linux
 
 
 #### Do docker build
@@ -40,7 +39,7 @@ Dont know how best to automate this to work for everybody running in Linux
 ````
 $docker build -t ue4:master .
 ````
-and wait a long time
+and wait a long time because it will download all the dependencies
 
 6) While waiting, inspect your /dev folder by ls /dev
 ````
@@ -66,7 +65,7 @@ full             mcelog        ram12               sda2    tty11     tty28  tty4
 ````
 At this point of time, just look at your nvidia* and snd
 
-7) Modify the docker-compose.yml file at "devices" section. Modify to suit for your machine to expose sound card and graphic card to container.
+7) Modify the docker-compose.yml file at "devices" section. Modify to suit for your host machine to expose sound card and graphic card to container.
 
 devices:
 ````
@@ -92,9 +91,9 @@ devices:
 #### Do docker-compose
 8) Once the docker build is completed. Run docker-compse run
 ````
-$docker-compose run ue4/bin/bash
+$docker-compose run ue4 /bin/bash
 ````
-which will signed you in as user `unreal`
+which will logged in as user `unreal`
 
 9) Now, you will be in a terminal /UnrealEngine, the following will build the Unreal Engine Editor
 ````
