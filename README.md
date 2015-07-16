@@ -1,21 +1,30 @@
 # ue4-in-docker
 
 ## Why do you have to run in Docker
-This is the recording of what you have done to get in working for you. 
+This is the recording of what you have done to get in working for you.
 I can screw around my container without comprising what I want to preserved. I use this to verify qt and gtk and found out gtk works best for me.
 
 ##How to run in your desktop
 ### ubuntu ( I am using xubuntu 14:04) -feel free to contribute others
+
+#### Preparation before docker build
 1) clone the my repo to your local disk
 ````
 git clone https://github.com/tweakmy/ue4-in-docker.git
-cd ue4-in-docker
+$cd ue4-in-docker
 ````
 
 2) clone the unreal engine within the folder, it will prompt for your password
 ````
-git clone https://github.com/EpicGames/UnrealEngine.git
+$git clone https://github.com/EpicGames/UnrealEngine.git
+$cd UnrealEngine
 ````
+Run Setup.sh here to save time trying to download the Unreal Editor Dependencies (this would be the content,docu,sample,tutorial) during the docker build
+ ````
+$sudo apt-get install mono libmono-microsoft-build-tasks-v4.0-4.0-cil
+$./Setup.sh
+````
+
 Now, this can be other git repo, which I will update shortly
 
 3) copy your NVIDIA driver file this folder (ue4-in-docker)
@@ -23,15 +32,17 @@ Now, this can be other git repo, which I will update shortly
 4) Modify the `NVIDIA-Linux-x86_64-340.76.run` in the Dockefile and put your NVIDIA driver file in there.
 Dont know how best to automate this to work for everybody running in Linux
 
+
+#### Do docker build
 5) Install docker in your machine which you can look up in internet and then do a docker build. You also will need to install docker-compose otherwise the `docker run` command is super long.
 ````
-docker build -t ue4:4.8.2-codelite .
+$docker build -t ue4:4.8.2-codelite .
 ````
 and wait a long time
 
 6) While waiting, inspect your /dev folder by ls /dev
 ````
-ls /dev
+$ls /dev
 autofs           fuse          mei                 ram13   sda3      tty12  tty29  tty45  tty61      ttyS19  ttyS7    vcsa3
 block            hidraw0       mem                 ram14   sda5      tty13  tty3   tty46  tty62      ttyS2   ttyS8    vcsa4
 bsg              hpet          net                 ram15   sda6      tty14  tty30  tty47  tty63      ttyS20  ttyS9    vcsa5
@@ -57,6 +68,7 @@ At this point of time, just look at your nvidia* and snd
 
 devices:
 ````
+  - "/dev/nvidia0"
   - "/dev/nvidiactl"
   - "/dev/snd/timer"
   - "/dev/snd/seq"
@@ -75,28 +87,29 @@ devices:
   - "/dev/snd/pcmC0D0p"
   - "/dev/snd/pcmC0D0c"
 ````
-
+#### Do docker-compose
 8) Once the docker build is completed. Run docker-compse run
 ````
-docker-compose run ue4codelite /bin/bash
+$docker-compose run ue4codelite /bin/bash
 ````
 
 9) Now, you will be in a terminal /UnrealEngine, the following will build the Unreal Engine Editor
 ````
-make
+$make
 ````
 this takes me 40 minutes. It depends on how powerful is your machine.
 
-10) On your host machine type
+10) On YOUR HOST MACHINE, to enable x display from the container
 ````
-xhost +
+$xhost +
 ````
 
 11) Run the Editor
 ````
-./Engine/Binaries/Linux/UE4Editor
+$./Engine/Binaries/Linux/UE4Editor
 ````
 
 #In future
 Everything will be automated til the build and you will get the editor or codelite displayed instead of terminal
+
 A shell script should be provided to do step 2 and 7
