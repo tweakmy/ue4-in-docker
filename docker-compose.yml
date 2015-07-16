@@ -1,5 +1,5 @@
 ue4:
-  image: ue4:master-1
+  image: ue4:master
   devices:
     - "/dev/nvidia0"
     - "/dev/nvidiactl"
@@ -27,6 +27,7 @@ ue4:
     # - /proc:/proc:rw
   privileged: true
   command: /bin/bash
+  #so that it does not consume the whole host machine
   cpu_shares: 812
   user: unreal
   # dockerfile:  Dockerfile-alternate
